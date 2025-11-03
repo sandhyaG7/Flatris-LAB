@@ -9,25 +9,43 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '20.x'
-  displayName: 'Install Node.js'
+jobs:
+- job: Build
+  displayName: 'Build React App'
+  steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '20.x'
+    displayName: 'Install Node.js'
 
-- script: |
-    npm install
-    npm run build
-  displayName: 'npm install and build'
+  - script: |
+      npm install
+      npm run build
+    displayName: 'npm install and build'
 
-- script: |
-    echo "Code analysis step"
+- job: Analyze
   displayName: 'Code Analysis'
+  dependsOn: Build
+  pool:
+    vmImage: ubuntu-latest
+  steps:
+  - script: echo "Code analysis step"
+    displayName: 'Code Analysis'
 
-- script: |
-    echo "Saving build artifacts"
-  displayName: 'Save Artifacts'
+- job: SaveArtifacts
+  displayName: 'Save Build Artifacts'
+  dependsOn: Analyze
+  pool:
+    vmImage: ubuntu-latest
+  steps:
+  - script: echo "Saving build artifacts"
+    displayName: 'Save Artifacts'
 
-- script: |
-    echo "Deploying application"
-  displayName: 'Deploy'
+- job: Deploy
+  displayName: 'Deploy Application'
+  dependsOn: SaveArtifacts
+  pool:
+    vmImage: ubuntu-latest
+  steps:
+  - script: echo "Deploying application"
+    displayName: 'Deploy'
