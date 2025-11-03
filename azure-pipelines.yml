@@ -21,13 +21,13 @@ steps:
   displayName: 'npm install and build'
 
 - script: |
-    echo "Analyze code here or run linting"
+    echo "Code analysis step"
   displayName: 'Code Analysis'
 
 - script: |
-    echo "Save build artifacts here"
+    echo "Saving build artifacts"
   displayName: 'Save Artifacts'
 
 - script: |
-    echo "Deploy to environment"
+    echo "Deploying application"
   displayName: 'Deploy'
