@@ -19,3 +19,15 @@ steps:
     npm install
     npm run build
   displayName: 'npm install and build'
+
+- script: |
+    echo "Analyze code here or run linting"
+  displayName: 'Code Analysis'
+
+- script: |
+    echo "Save build artifacts here"
+  displayName: 'Save Artifacts'
+
+- script: |
+    echo "Deploy to environment"
+  displayName: 'Deploy'
